@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DefineConstants>TRACE;DEBUG;NET;NET5_0;NETCOREAPP;OperationId</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET;NET5_0;NETCOREAPP;ProducesConsumes</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

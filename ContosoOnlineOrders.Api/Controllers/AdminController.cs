@@ -11,8 +11,11 @@ namespace ContosoOnlineOrders.Api.Controllers
 #pragma warning disable CS1998
     [Route("[controller]")]
     [ApiController]
+
+#if ProducesConsumes
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
+#endif
     public class AdminController : ControllerBase
     {
         public IStoreServices StoreServices { get; }

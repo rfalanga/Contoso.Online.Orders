@@ -8,7 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+#if ApiConventions
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
+#endif
 
 namespace ContosoOnlineOrders.Api
 {

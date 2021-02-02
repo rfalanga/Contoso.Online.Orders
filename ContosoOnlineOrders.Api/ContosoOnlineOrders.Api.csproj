@@ -7,12 +7,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DefineConstants>TRACE;DEBUG;NET;NET5_0;NETCOREAPP;ProducesConsumes</DefineConstants>
-    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;DEBUG;NET;NET5_0;NETCOREAPP;ProducesConsumes;ApiConventions;OperationId</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+  
   <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
     <Exec Command="echo 'Generating OpenAPI file for $(OpenApiDocumentName)'" />
     <Exec Command="dotnet swagger tofile --serializeasv2 --output $(OutputPath)$(AssemblyName).json $(OutputPath)$(AssemblyName).dll $(OpenApiDocumentName)" ContinueOnError="true" />

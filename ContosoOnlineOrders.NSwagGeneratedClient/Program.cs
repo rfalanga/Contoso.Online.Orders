@@ -30,7 +30,7 @@ namespace ContosoOnlineOrders.NSwagGeneratedClient
                 });
 
                 // update a product's inventory
-                apiClient.UpdateProductInventoryAsync(1,
+                apiClient.UpdateProductInventoryAsync(1000,
                     new InventoryUpdateRequest
                     {
                         CountToAdd = 50,
@@ -84,7 +84,7 @@ namespace ContosoOnlineOrders.NSwagGeneratedClient
                 });
 
                 // update a product's inventory
-                apiClient.CheckInventory2Async(1,                           
+                apiClient.CheckInventory2Async(1000,                           
                 new InventoryUpdateRequest
                     {
                         CountToAdd = 50,

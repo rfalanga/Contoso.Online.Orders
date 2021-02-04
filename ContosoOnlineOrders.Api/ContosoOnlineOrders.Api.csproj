@@ -7,13 +7,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DefineConstants>TRACE;DEBUG;NET;NET5_0;NETCOREAPP;ProducesConsumes;ApiConventions;OperationId</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET;NET5_0;NETCOREAPP</DefineConstants>
   </PropertyGroup>
   
   <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
     <Exec Command="echo 'Generating OpenAPI file for $(OpenApiDocumentName)'" />
     <Exec Command="dotnet swagger tofile --serializeasv2 --output $(OutputPath)$(AssemblyName).json $(OutputPath)$(AssemblyName).dll $(OpenApiDocumentName)" ContinueOnError="true" />
-	</Target>
+  </Target>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" NoWarn="NU1605" />

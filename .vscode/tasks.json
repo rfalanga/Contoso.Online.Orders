@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/ContosoOnlineOrders.Api/ContosoOnlineOrders.Api.csproj",
+                "${workspaceFolder}/ContosoOnlineOrders.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

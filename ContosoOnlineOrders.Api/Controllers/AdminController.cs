@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using ContosoOnlineOrders.Api.Models;
+using ContosoOnlineOrders.Abstractions.Models;
 using ContosoOnlineOrders.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -120,7 +120,7 @@ namespace ContosoOnlineOrders.Api.Controllers
 #else
         [HttpPost("/products")]
 #endif
-        public async Task<ActionResult<IEnumerable<Order>>> CreateProduct(
+        public async Task<ActionResult<Product>> CreateProduct(
             [FromBody] CreateProductRequest request)
         {
             try

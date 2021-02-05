@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ContosoOnlineOrders.Api.Models
+namespace ContosoOnlineOrders.Abstractions.Models
 {
     public record Order(Guid Id, List<CartItem> Items)
     {

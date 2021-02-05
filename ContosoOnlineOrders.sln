@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoOnlineOrders.Api", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoOnlineOrders.NSwagGeneratedClient", "ContosoOnlineOrders.NSwagGeneratedClient\ContosoOnlineOrders.NSwagGeneratedClient.csproj", "{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsotoOnlineOrders.RefitClient", "ConsotoOnlineOrders.RefitClient\ConsotoOnlineOrders.RefitClient.csproj", "{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoOnlineOrders.Abstractions", "ContosoOnlineOrders.Abstractions\ContosoOnlineOrders.Abstractions.csproj", "{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +48,29 @@ Global
 		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|x64.Build.0 = Release|Any CPU
 		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|x86.ActiveCfg = Release|Any CPU
 		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|x86.Build.0 = Release|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Debug|x64.Build.0 = Debug|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Debug|x86.Build.0 = Debug|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Release|x64.ActiveCfg = Release|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Release|x64.Build.0 = Release|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Release|x86.ActiveCfg = Release|Any CPU
+		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Release|x86.Build.0 = Release|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Debug|x64.Build.0 = Debug|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Debug|x86.Build.0 = Debug|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Release|x64.ActiveCfg = Release|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Release|x64.Build.0 = Release|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Release|x86.ActiveCfg = Release|Any CPU
+		{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

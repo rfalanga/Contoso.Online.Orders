@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ContosoOnlineOrders.Api.Models;
+using ContosoOnlineOrders.Abstractions.Models;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace ContosoOnlineOrders.Api.Services

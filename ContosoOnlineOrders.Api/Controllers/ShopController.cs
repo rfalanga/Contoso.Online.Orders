@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using ContosoOnlineOrders.Api.Models;
+using ContosoOnlineOrders.Abstractions.Models;
 using ContosoOnlineOrders.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 

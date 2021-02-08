@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoOnlineOrders.Api.Controllers
 {
-#pragma warning disable CS1998
     [Route("[controller]")]
     [ApiController]
 #if ProducesConsumes
@@ -30,15 +29,19 @@ namespace ContosoOnlineOrders.Api.Controllers
 #endif
         public async Task<ActionResult<Order>> CreateOrder(Order order)
         {
+            ActionResult<Order> result = Conflict();
+
             try
             {
                 StoreServices.CreateOrder(order);
-                return Created($"/orders/{order.Id}", order);
+                result = Created($"/orders/{order.Id}", order);
             }
             catch
             {
-                return Conflict();
+                result = Conflict();
             }
+
+            return await Task.FromResult(result);
         }
 
 #if OperationId
@@ -48,7 +51,7 @@ namespace ContosoOnlineOrders.Api.Controllers
 #endif
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return Ok(StoreServices.GetProducts());
+            return await Task.FromResult(Ok(StoreServices.GetProducts()));
         }
 
 #if OperationId
@@ -59,16 +62,14 @@ namespace ContosoOnlineOrders.Api.Controllers
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = StoreServices.GetProduct(id);
+            ActionResult<Product> result = NotFound();
 
-            if(product == null)
+            if(product != null)
             {
-                return NotFound();
+                result = Ok(product);
             }
-            else
-            {
-                return Ok(product);
-            }
+
+            return await Task.FromResult(result);
         }
     }
-#pragma warning restore CS1998
 }

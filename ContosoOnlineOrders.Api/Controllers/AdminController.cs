@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoOnlineOrders.Api.Controllers
 {
-#pragma warning disable CS1998
     [Route("[controller]")]
     [ApiController]
 #if ProducesConsumes
@@ -31,7 +30,7 @@ namespace ContosoOnlineOrders.Api.Controllers
 #endif
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return Ok(StoreServices.GetOrders());
+            return await Task.FromResult(Ok(StoreServices.GetOrders()));
         }
 
 #if OperationId
@@ -42,15 +41,14 @@ namespace ContosoOnlineOrders.Api.Controllers
         public async Task <ActionResult<Order>> GetOrder([FromRoute] Guid id)
         {
             var order = StoreServices.GetOrder(id);
+            ActionResult<Order> result = NotFound();
 
-            if(order == null)
+            if(order != null)
             {
-                return NotFound();
+                result = Ok(order);
             }
-            else
-            {
-                return Ok(order);
-            }
+
+            return await Task.FromResult(result);
         }
 
 #if OperationId
@@ -60,22 +58,22 @@ namespace ContosoOnlineOrders.Api.Controllers
 #endif
         public async Task<ActionResult> CheckInventory([FromRoute] Guid id)
         {
+            ActionResult result = NotFound();
+
             try
             {
-                var result = StoreServices.CheckOrderInventory(id);
-                if(result)
+                var inventory = StoreServices.CheckOrderInventory(id);
+                if (inventory)
                 {
-                    return Ok();
-                }
-                else
-                {
-                    return NotFound();
+                    result = Ok();
                 }
             }
             catch
             {
-                return Conflict();
+                result = Conflict();
             }
+
+            return await Task.FromResult(result);
         }
 
 #if OperationId
@@ -85,15 +83,15 @@ namespace ContosoOnlineOrders.Api.Controllers
 #endif
         public async Task<ActionResult> ShipOrder([FromRoute] Guid id)
         {
-            var result = StoreServices.ShipOrder(id);
-            if(result)
+            var shipResult = StoreServices.ShipOrder(id);
+            ActionResult result = NotFound();
+
+            if(shipResult)
             {
-                return Ok();
+                result = Ok();
             }
-            else
-            {
-                return NotFound();
-            }
+
+            return await Task.FromResult(result);
         }
 
 #if OperationId
@@ -104,15 +102,19 @@ namespace ContosoOnlineOrders.Api.Controllers
         public async Task<ActionResult> UpdateProductInventory([FromRoute] int id, 
             [FromBody] InventoryUpdateRequest request)
         {
+            ActionResult result = NotFound();
+
             try
             {
                 StoreServices.UpdateProductInventory(id, request.countToAdd);
-                return Ok();
+                result = Ok();
             }
             catch
             {
-                return NotFound();
+                result = NotFound();
             }
+
+            return await Task.FromResult(result);
         }
 
 #if OperationId
@@ -123,17 +125,20 @@ namespace ContosoOnlineOrders.Api.Controllers
         public async Task<ActionResult<Product>> CreateProduct(
             [FromBody] CreateProductRequest request)
         {
+            ActionResult<Product> result = NotFound();
+
             try
             {
                 var newProduct = new Product(request.Id, request.Name, request.InventoryCount);
                 StoreServices.CreateProduct(newProduct);
-                return Created($"/products/{request.Id}", newProduct);
+                result = Created($"/products/{request.Id}", newProduct);
             }
             catch
             {
-                return Conflict();
+                result = Conflict();
             }
+
+            return await Task.FromResult(result);
         }
     }
-#pragma warning restore CS1998
 }

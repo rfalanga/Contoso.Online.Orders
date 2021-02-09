@@ -10,6 +10,8 @@ namespace ContosoOnlineOrders.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
 #if ProducesConsumes
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using ContosoOnlineOrders.Abstractions.Models;
@@ -9,6 +10,8 @@ namespace ContosoOnlineOrders.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
 #if ProducesConsumes
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
@@ -52,6 +55,18 @@ namespace ContosoOnlineOrders.Api.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await Task.FromResult(Ok(StoreServices.GetProducts()));
+        }
+
+#if OperationId
+        [HttpGet("/products", Name = nameof(GetProductsPage))]
+#else
+        [HttpGet("/products")]
+#endif
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsPage([FromQuery] int page = 0)
+        {
+            var pageSize = 5;
+            var productsPage = StoreServices.GetProducts().Skip(page * pageSize).Take(pageSize);
+            return await Task.FromResult(Ok(productsPage));
         }
 
 #if OperationId

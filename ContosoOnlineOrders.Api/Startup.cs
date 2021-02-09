@@ -17,7 +17,7 @@ namespace ContosoOnlineOrders.Api
 {
     public class Startup
     {
-        static string CurrentVersion = "1.0.0";
+        static string CurrentVersion = "1.1";
 
         public Startup(IConfiguration configuration)
         {
@@ -32,6 +32,7 @@ namespace ContosoOnlineOrders.Api
             services.AddMemoryCache();
             services.AddSingleton<IStoreServices, MemoryCachedStoreServices>();
             services.AddControllers();
+            services.AddApiVersioning();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(CurrentVersion, new OpenApiInfo 

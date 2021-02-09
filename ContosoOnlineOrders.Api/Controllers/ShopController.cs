@@ -58,11 +58,12 @@ namespace ContosoOnlineOrders.Api.Controllers
         }
 
 #if OperationId
-        [HttpGet("/products", Name = nameof(GetProductsPage))]
+        [HttpGet("/products/page/{page}", Name = nameof(GetProductsPage))]
 #else
         [HttpGet("/products")]
 #endif
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsPage([FromQuery] int page = 0)
+        [MapToApiVersion("1.1")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsPage([FromRoute] int page = 0)
         {
             var pageSize = 5;
             var productsPage = StoreServices.GetProducts().Skip(page * pageSize).Take(pageSize);

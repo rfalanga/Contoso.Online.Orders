@@ -34,7 +34,11 @@ namespace ContosoOnlineOrders.Api
             services.AddMemoryCache();
             services.AddSingleton<IStoreServices, MemoryCachedStoreServices>();
             services.AddControllers();
-            services.AddSwaggerGen(c => c.OperationFilter<SwaggerDefaultValues>());
+            services.AddSwaggerGen(c =>
+            {
+                c.AddServer(new OpenApiServer { Url = "http://localhost:5000" });
+                c.OperationFilter<SwaggerDefaultValues>();
+            });
             services.AddApiVersioning();
             services.AddVersionedApiExplorer();
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();

@@ -16,7 +16,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -93,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ContosoMobileOrders\ContosoMobileOrders.csproj">
-      <Project>{5B53504B-C976-4C44-9C02-A613A365153D}</Project>
+      <Project>{9EEF023F-E108-477C-86F3-E2EE14A7F335}</Project>
       <Name>ContosoMobileOrders</Name>
     </ProjectReference>
   </ItemGroup>

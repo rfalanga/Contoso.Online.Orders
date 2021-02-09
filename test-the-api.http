@@ -1,0 +1,15 @@
+# create a new product
+POST http://localhost:5000/products?api-version=1.1 HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1002,
+  "name": "Jalapenos",
+  "inventoryCount": 20
+}
+
+###
+
+# check to make sure the product is in the list
+GET http://localhost:5000/products?api-version=1.1 HTTP/1.1
+

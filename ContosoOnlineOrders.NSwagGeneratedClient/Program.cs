@@ -9,11 +9,8 @@ namespace ContosoOnlineOrders.NSwagGeneratedClient
         {
             using(var httpClient = new HttpClient())
             {
-                var apiClient = new ContosoOnlineOrders_ApiClient(
-                    "http://localhost:5000",
-                    httpClient
-                );
-
+                var apiClient = new ContosoOnlineOrders_ApiClient(httpClient);
+                
 #if OperationId
                 /*------------------------------------------------------------
                 With explicit operationId: Note how the API advertises itself

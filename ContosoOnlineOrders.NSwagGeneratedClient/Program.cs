@@ -9,11 +9,8 @@ namespace ContosoOnlineOrders.NSwagGeneratedClient
         {
             using(var httpClient = new HttpClient())
             {
-                var apiClient = new ContosoOnlineOrders_ApiClient(
-                    "http://localhost:5000",
-                    httpClient
-                );
-
+                var apiClient = new ContosoOnlineOrders_ApiClient(httpClient);
+                
 #if OperationId
                 /*------------------------------------------------------------
                 With explicit operationId: Note how the API advertises itself
@@ -21,7 +18,7 @@ namespace ContosoOnlineOrders.NSwagGeneratedClient
                 ------------------------------------------------------------*/
 
                 // create a product
-                apiClient.CreateProductAsync(new CreateProductRequest
+                apiClient.CreateProductAsync("1.1", new CreateProductRequest
                 {
                     Id = 1000,
                     InventoryCount = 0,
@@ -29,7 +26,7 @@ namespace ContosoOnlineOrders.NSwagGeneratedClient
                 });
 
                 // update a product's inventory
-                apiClient.UpdateProductInventoryAsync(1000,
+                apiClient.UpdateProductInventoryAsync(1000, "1.1",
                     new InventoryUpdateRequest
                     {
                         CountToAdd = 50,
@@ -37,15 +34,15 @@ namespace ContosoOnlineOrders.NSwagGeneratedClient
                     });
 
                 // get all products
-                apiClient.GetProductsAsync();
+                apiClient.GetProductsAsync("1.1");
 
                 // get one product
-                apiClient.GetProductAsync(1000);
+                apiClient.GetProductAsync(1000, "1.1");
 
                 // create a new order
                 Guid orderId = Guid.NewGuid();
 
-                apiClient.CreateOrderAsync(new Order
+                apiClient.CreateOrderAsync("1.1", new Order
                 {
                     Id = orderId,
                     Items = new CartItem[]
@@ -55,16 +52,16 @@ namespace ContosoOnlineOrders.NSwagGeneratedClient
                 });
 
                 // get one order
-                apiClient.GetOrderAsync(orderId);
+                apiClient.GetOrderAsync(orderId, "1.1");
 
                 // get all orders
-                apiClient.GetOrdersAsync();
+                apiClient.GetOrdersAsync("1.1");
 
                 // check an order's inventory
-                apiClient.CheckInventoryAsync(orderId);
+                apiClient.CheckInventoryAsync(orderId, "1.1");
 
                 // ship an order
-                apiClient.ShipOrderAsync(orderId);
+                apiClient.ShipOrderAsync(orderId, "1.1");
 #else
                 /*------------------------------------------------------------
                 Without explicit operationId: Note how the generated SDK

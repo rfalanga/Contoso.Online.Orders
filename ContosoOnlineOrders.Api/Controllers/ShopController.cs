@@ -1,15 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using ContosoOnlineOrders.Api.Models;
+using ContosoOnlineOrders.Abstractions.Models;
 using ContosoOnlineOrders.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoOnlineOrders.Api.Controllers
 {
-#pragma warning disable CS1998
     [Route("[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
 #if ProducesConsumes
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
@@ -30,15 +32,19 @@ namespace ContosoOnlineOrders.Api.Controllers
 #endif
         public async Task<ActionResult<Order>> CreateOrder(Order order)
         {
+            ActionResult<Order> result = Conflict();
+
             try
             {
                 StoreServices.CreateOrder(order);
-                return Created($"/orders/{order.Id}", order);
+                result = Created($"/orders/{order.Id}", order);
             }
             catch
             {
-                return Conflict();
+                result = Conflict();
             }
+
+            return await Task.FromResult(result);
         }
 
 #if OperationId
@@ -48,7 +54,16 @@ namespace ContosoOnlineOrders.Api.Controllers
 #endif
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return Ok(StoreServices.GetProducts());
+            return await Task.FromResult(Ok(StoreServices.GetProducts()));
+        }
+
+        [HttpGet("/products/page/{page}", Name = nameof(GetProductsPage))]
+        [MapToApiVersion("1.1")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsPage([FromRoute] int page = 0)
+        {
+            var pageSize = 5;
+            var productsPage = StoreServices.GetProducts().Skip(page * pageSize).Take(pageSize);
+            return await Task.FromResult(Ok(productsPage));
         }
 
 #if OperationId
@@ -59,16 +74,14 @@ namespace ContosoOnlineOrders.Api.Controllers
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = StoreServices.GetProduct(id);
+            ActionResult<Product> result = NotFound();
 
-            if(product == null)
+            if(product != null)
             {
-                return NotFound();
+                result = Ok(product);
             }
-            else
-            {
-                return Ok(product);
-            }
+
+            return await Task.FromResult(result);
         }
     }
-#pragma warning restore CS1998
 }

@@ -28,6 +28,20 @@
             }
         },
         {
+          "name": "Debug Refit Client",
+          "type": "coreclr",
+          "request": "launch",
+          "preLaunchTask": "build",
+          // If you have changed target frameworks, make sure to update the program path.
+          "program": "${workspaceFolder}/ConsotoOnlineOrders.RefitClient/bin/Debug/net5.0/ConsotoOnlineOrders.RefitClient.dll",
+          "args": [],
+          "cwd": "${workspaceFolder}",
+          "stopAtEntry": false,
+          "sourceFileMap": {
+              "/Views": "${workspaceFolder}/Views"
+          }
+      },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

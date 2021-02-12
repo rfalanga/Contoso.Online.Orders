@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using ContosoOnlineOrders.Api.Models;
+using ContosoOnlineOrders.Abstractions.Models;
 
 namespace ContosoOnlineOrders.Api.Services
 {

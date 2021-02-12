@@ -2,23 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContosoOnlineOrders.Api.Infrastructure;
 using ContosoOnlineOrders.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ContosoOnlineOrders.Api
 {
     public class Startup
     {
-        static string CurrentVersion = "1.0.0";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,29 +36,33 @@ namespace ContosoOnlineOrders.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc(CurrentVersion, new OpenApiInfo 
-                { 
-                    Title = "Contoso Online Orders", 
-                    Version = CurrentVersion
-                });
+                c.AddServer(new OpenApiServer { Url = "http://localhost:5000" });
+                c.OperationFilter<SwaggerDefaultValues>();
             });
+            services.AddApiVersioning();
+            services.AddVersionedApiExplorer();
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => 
+                app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint($"/swagger/{CurrentVersion}/swagger.json", $"Contoso Online Orders {CurrentVersion}");
                     c.DisplayOperationId();
+                    //c.SwaggerEndpoint($"/swagger/{CurrentVersion}/swagger.json", $"Contoso Online Orders {CurrentVersion}");
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        c.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"Contoso Online Orders {description.GroupName}");
+                    }
                 });
             }
-
-            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

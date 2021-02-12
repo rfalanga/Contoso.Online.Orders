@@ -1,4 +1,4 @@
-namespace ContosoOnlineOrders.Api.Models
+namespace ContosoOnlineOrders.Abstractions.Models
 {
     public record CartItem(int ProductId, int Quantity);
 }

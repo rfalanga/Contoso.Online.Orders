@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoOnlineOrders.Api", "ContosoOnlineOrders.Api\ContosoOnlineOrders.Api.csproj", "{27B53267-1B4D-403F-9667-7031CEC537A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoOnlineOrders.NSwagGeneratedClient", "ContosoOnlineOrders.NSwagGeneratedClient\ContosoOnlineOrders.NSwagGeneratedClient.csproj", "{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsotoOnlineOrders.RefitClient", "ConsotoOnlineOrders.RefitClient\ConsotoOnlineOrders.RefitClient.csproj", "{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoOnlineOrders.Abstractions", "ContosoOnlineOrders.Abstractions\ContosoOnlineOrders.Abstractions.csproj", "{CADAC54F-93DE-4DC5-B4C4-A27F7C311E45}"
@@ -17,9 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoMobileOrders.Android
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoMobileOrders.iOS", "ContosoMobileOrders\ContosoMobileOrders.iOS\ContosoMobileOrders.iOS.csproj", "{357D92A4-BF47-4D05-99D3-2A88D2007B2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoMobileOrders", "ContosoMobileOrders\ContosoMobileOrders\ContosoMobileOrders.csproj", "{9EEF023F-E108-477C-86F3-E2EE14A7F335}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoMobileOrders", "ContosoMobileOrders\ContosoMobileOrders\ContosoMobileOrders.csproj", "{9EEF023F-E108-477C-86F3-E2EE14A7F335}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsotoOnlineOrders.RefitAbstractions", "ConsotoOnlineOrders.RefitAbstractions\ConsotoOnlineOrders.RefitAbstractions.csproj", "{31F3DCEC-CDFE-4EC9-BD26-AE43EF82FDF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoOnlineOrders.ConsoleClient", "ContosoOnlineOrders.NSwagGeneratedClient\ContosoOnlineOrders.ConsoleClient.csproj", "{5548B0F9-7776-4D7A-9858-B4F123310D0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,26 +55,6 @@ Global
 		{27B53267-1B4D-403F-9667-7031CEC537A3}.Release|x64.Build.0 = Release|Any CPU
 		{27B53267-1B4D-403F-9667-7031CEC537A3}.Release|x86.ActiveCfg = Release|Any CPU
 		{27B53267-1B4D-403F-9667-7031CEC537A3}.Release|x86.Build.0 = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|x64.Build.0 = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Debug|x86.Build.0 = Debug|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|iPhone.Build.0 = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|x64.ActiveCfg = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|x64.Build.0 = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|x86.ActiveCfg = Release|Any CPU
-		{5D4ADB9E-933F-4D91-8EF9-788678E2C0CE}.Release|x86.Build.0 = Release|Any CPU
 		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D388F708-FFCC-4BCA-B86F-CAEACB53CFB7}.Debug|iPhone.ActiveCfg = Debug|Any CPU
@@ -199,6 +179,26 @@ Global
 		{31F3DCEC-CDFE-4EC9-BD26-AE43EF82FDF4}.Release|x64.Build.0 = Release|Any CPU
 		{31F3DCEC-CDFE-4EC9-BD26-AE43EF82FDF4}.Release|x86.ActiveCfg = Release|Any CPU
 		{31F3DCEC-CDFE-4EC9-BD26-AE43EF82FDF4}.Release|x86.Build.0 = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|x64.Build.0 = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Debug|x86.Build.0 = Debug|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|iPhone.Build.0 = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|x64.ActiveCfg = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|x64.Build.0 = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|x86.ActiveCfg = Release|Any CPU
+		{5548B0F9-7776-4D7A-9858-B4F123310D0E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

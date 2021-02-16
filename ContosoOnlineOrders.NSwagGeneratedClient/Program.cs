@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 
-namespace ContosoOnlineOrders.NSwagGeneratedClient
+namespace ContosoOnlineOrders.ConsoleClient
 {
     class Program
     {
@@ -10,7 +10,7 @@ namespace ContosoOnlineOrders.NSwagGeneratedClient
             using(var httpClient = new HttpClient())
             {
                 var apiClient = new ContosoOnlineOrders_ApiClient(httpClient);
-                
+
 #if OperationId
                 /*------------------------------------------------------------
                 With explicit operationId: Note how the API advertises itself

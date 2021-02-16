@@ -10,10 +10,9 @@
     <DefineConstants>TRACE;DEBUG;NET;NET5_0;NETCOREAPP;OperationId</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
   <ItemGroup>
-    <OpenApiReference Include="..\ContosoOnlineOrders.Api\bin\Debug\net5.0\ContosoOnlineOrders.Api.json" CodeGenerator="NSwagCSharp">
-      <Link>OpenAPIs\ContosoOnlineOrders.Api.json</Link>
-    </OpenApiReference>
+    <OpenApiReference Include="..\ContosoOnlineOrders.Api\bin\Debug\net5.0\ContosoOnlineOrders.Api.json" CodeGenerator="NSwagCSharp" Namespace="ContosoOnlineOrders.ConsoleClient" Link="OpenAPIs\ContosoOnlineOrders.Api.json" />
   </ItemGroup>
 
   <ItemGroup>

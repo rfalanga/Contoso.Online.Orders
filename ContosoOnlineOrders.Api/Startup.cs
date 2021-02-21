@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContosoOnlineOrders.Abstractions;
 using ContosoOnlineOrders.Api.Infrastructure;
 using ContosoOnlineOrders.Api.Services;
 using Microsoft.AspNetCore.Builder;
@@ -32,7 +33,7 @@ namespace ContosoOnlineOrders.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
-            services.AddSingleton<IStoreServices, MemoryCachedStoreServices>();
+            services.AddSingleton<IStoreDataService, MemoryCachedStoreServices>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

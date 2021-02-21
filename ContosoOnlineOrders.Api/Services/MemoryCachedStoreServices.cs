@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContosoOnlineOrders.Abstractions;
 using ContosoOnlineOrders.Abstractions.Models;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace ContosoOnlineOrders.Api.Services
 {
-    public class MemoryCachedStoreServices : IStoreServices
+    public class MemoryCachedStoreServices : IStoreDataService
     {
         const string MEMCACHE_KEY_ORDERS = "orders";
         const string MEMCACHE_KEY_PRODUCTS = "products";

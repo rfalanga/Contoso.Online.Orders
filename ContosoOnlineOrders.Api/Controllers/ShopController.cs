@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using ContosoOnlineOrders.Abstractions;
 using ContosoOnlineOrders.Abstractions.Models;
 using ContosoOnlineOrders.Api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +19,9 @@ namespace ContosoOnlineOrders.Api.Controllers
 #endif
     public class ShopController : ControllerBase
     {
-        public IStoreServices StoreServices { get; }
+        public IStoreDataService StoreServices { get; }
 
-        public ShopController(IStoreServices storeServices)
+        public ShopController(IStoreDataService storeServices)
         {
             StoreServices = storeServices;
         }

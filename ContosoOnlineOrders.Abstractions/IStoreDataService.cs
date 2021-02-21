@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using ContosoOnlineOrders.Abstractions.Models;
 
-namespace ContosoOnlineOrders.Api.Services
+namespace ContosoOnlineOrders.Abstractions
 {
-    public interface IStoreServices
+    public interface IStoreDataService
     {
         IEnumerable<Product> GetProducts();
         Product GetProduct(int id);

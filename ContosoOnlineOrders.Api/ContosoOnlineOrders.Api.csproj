@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <OpenApiDocumentName>1.1</OpenApiDocumentName>
     <Configurations>Debug;Release</Configurations>
+    <UserSecretsId>b269d88f-f56f-432e-b415-dbf4a82e4601</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -27,6 +28,7 @@
     <ProjectReference Include="..\ContosoOnlineOrders.Abstractions\ContosoOnlineOrders.Abstractions.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\ContosoOnlineOrders.DataServices.AzureTables\ContosoOnlineOrders.DataServices.AzureTables.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Infrastructure\" />

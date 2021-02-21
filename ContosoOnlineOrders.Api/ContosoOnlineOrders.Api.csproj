@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <OpenApiDocumentName>1.1</OpenApiDocumentName>
     <Configurations>Debug;Release</Configurations>
+    <UserSecretsId>4c6ad165-01b9-4583-98f6-f7dd0aa726a7</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -18,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.1" NoWarn="NU1605" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.16.0" NoWarn="NU1605"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
@@ -27,6 +29,7 @@
     <ProjectReference Include="..\ContosoOnlineOrders.Abstractions\ContosoOnlineOrders.Abstractions.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\ContosoOnlineOrders.DataProviders.Cosmos\ContosoOnlineOrders.DataProviders.Cosmos.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Infrastructure\" />

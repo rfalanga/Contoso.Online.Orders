@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoOnlineOrders.Console
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoOnlineOrders.DataProviders.Cosmos", "ContosoOnlineOrders.DataProviders.Cosmos\ContosoOnlineOrders.DataProviders.Cosmos.csproj", "{9B0DB724-4B95-494F-8756-F2F031A22DF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoOnlineOrders.Functions", "ContosoOnlineOrders.Functions\ContosoOnlineOrders.Functions.csproj", "{60C7D478-D5BB-485D-8810-7939F99F39FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -221,6 +223,26 @@ Global
 		{9B0DB724-4B95-494F-8756-F2F031A22DF7}.Release|x64.Build.0 = Release|Any CPU
 		{9B0DB724-4B95-494F-8756-F2F031A22DF7}.Release|x86.ActiveCfg = Release|Any CPU
 		{9B0DB724-4B95-494F-8756-F2F031A22DF7}.Release|x86.Build.0 = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|x64.Build.0 = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Debug|x86.Build.0 = Debug|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|iPhone.Build.0 = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|x64.ActiveCfg = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|x64.Build.0 = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|x86.ActiveCfg = Release|Any CPU
+		{60C7D478-D5BB-485D-8810-7939F99F39FE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

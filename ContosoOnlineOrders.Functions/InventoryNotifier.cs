@@ -13,6 +13,7 @@ using AdaptiveCards.Templating;
 using System.Collections.Generic;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+using System.Linq;
 
 namespace ContosoOnlineOrders.Functions
 {
@@ -56,7 +57,10 @@ namespace ContosoOnlineOrders.Functions
             }
 
             // add all the products that need re-stocking to the card
-            meta.Products = JsonConvert.DeserializeObject<List<Product>>(await req.ReadAsStringAsync());
+            meta.Products = JsonConvert.DeserializeObject<List<Product>>(
+                await req.ReadAsStringAsync()
+            ).Where(_ => _.InventoryCount <= 5)
+                .ToList();
 
             // render the card
             AdaptiveCardTemplate template = new AdaptiveCardTemplate(json);

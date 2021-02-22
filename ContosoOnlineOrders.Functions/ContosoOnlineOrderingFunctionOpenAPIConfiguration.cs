@@ -12,7 +12,7 @@ namespace ContosoOnlineOrders.Functions
         public OpenApiInfo Info { get; set; } = new OpenApiInfo()
         {
             Version = "1.0.0",
-            Title = "Contoso Online Ordering Functions",
+            Title = "Notification APIs",
             Description = "Functions used by Contoso Online Ordering",
             Contact = new OpenApiContact()
             {

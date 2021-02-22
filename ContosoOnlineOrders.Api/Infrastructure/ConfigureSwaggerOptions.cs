@@ -24,7 +24,7 @@ namespace ContosoOnlineOrders.Api.Infrastructure
         {
             var info = new OpenApiInfo()
             {
-                Title = "Contoso Online Orders",
+                Title = "Store APIs",
                 Version = description.ApiVersion.ToString()
             };
 

@@ -13,10 +13,9 @@ namespace ContosoOnlineOrders.Api.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
-#if ProducesConsumes
+    [ApiVersion("1.2")]
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
-#endif
     public class ShopController : ControllerBase
     {
         public IStoreDataService StoreServices { get; }
@@ -26,11 +25,7 @@ namespace ContosoOnlineOrders.Api.Controllers
             StoreServices = storeServices;
         }
 
-#if OperationId
         [HttpPost("/orders", Name = nameof(CreateOrder))]
-#else
-        [HttpPost("/orders")]
-#endif
         public async Task<ActionResult<Order>> CreateOrder(Order order)
         {
             ActionResult<Order> result = Conflict();
@@ -48,11 +43,7 @@ namespace ContosoOnlineOrders.Api.Controllers
             return await Task.FromResult(result);
         }
 
-#if OperationId
         [HttpGet("/products", Name = nameof(GetProducts))]
-#else
-        [HttpGet("/products")]
-#endif
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await Task.FromResult(Ok(StoreServices.GetProducts()));
@@ -60,6 +51,7 @@ namespace ContosoOnlineOrders.Api.Controllers
 
         [HttpGet("/products/page/{page}", Name = nameof(GetProductsPage))]
         [MapToApiVersion("1.1")]
+        [MapToApiVersion("1.2")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsPage([FromRoute] int page = 0)
         {
             var pageSize = 5;
@@ -67,11 +59,7 @@ namespace ContosoOnlineOrders.Api.Controllers
             return await Task.FromResult(Ok(productsPage));
         }
 
-#if OperationId
         [HttpGet("/products/{id}", Name = nameof(GetProduct))]
-#else
-        [HttpGet("/products/{id}")]
-#endif
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = StoreServices.GetProduct(id);

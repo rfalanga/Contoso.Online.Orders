@@ -44,8 +44,7 @@ namespace ContosoOnlineOrders.Api
             services.AddApiVersioning();
             services.AddVersionedApiExplorer(options =>
             {
-                options.GroupNameFormat = "VV";
-                options.DefaultApiVersion = new ApiVersion(1, 1);
+                options.DefaultApiVersion = ApiVersion.Parse("1.1");
                 options.AssumeDefaultVersionWhenUnspecified = true;
             });
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
@@ -63,7 +62,8 @@ namespace ContosoOnlineOrders.Api
                 app.UseSwaggerUI(c =>
                 {
                     c.DisplayOperationId();
-                    foreach (var description in provider.ApiVersionDescriptions)
+                    var versionDescriptions = provider.ApiVersionDescriptions;
+                    foreach (var description in provider.ApiVersionDescriptions.OrderByDescending(_ => _.ApiVersion))
                     {
                         c.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"Contoso Online Orders {description.GroupName}");
                     }

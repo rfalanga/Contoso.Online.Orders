@@ -41,8 +41,16 @@ namespace ContosoOnlineOrders.Api
                 c.AddServer(new OpenApiServer { Url = "http://localhost:5000" });
                 c.OperationFilter<SwaggerDefaultValues>();
             });
-            services.AddApiVersioning();
-            services.AddVersionedApiExplorer();
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
+                options.DefaultApiVersion = new ApiVersion(1, 1);
+            });
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "VV";
+            });
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         }
 

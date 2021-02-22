@@ -48,7 +48,7 @@ namespace ContosoOnlineOrders.Functions
             };
 
             // open the card template
-            using (Stream stream = File.OpenRead("InventoryNotificationCard.json"))
+            using(Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("ContosoOnlineOrders.Functions.InventoryNotificationCard.json"))
             {
                 using (StreamReader rdr = new StreamReader(stream))
                 {

@@ -38,7 +38,7 @@ namespace ContosoOnlineOrders.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.AddServer(new OpenApiServer { Url = "http://contosoonlineordersapiwebapp.azurewebsites.net" });
+                c.AddServer(new OpenApiServer { Url = "http://localhost:5000" });
                 c.OperationFilter<SwaggerDefaultValues>();
             });
             services.AddApiVersioning();

@@ -27,13 +27,13 @@ namespace ContosoOnlineOrders.Api.Controllers
         }
 
         [HttpGet("/orders", Name = nameof(GetOrders))]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public ActionResult<IEnumerable<Order>> GetOrders()
         {
-            return await Task.FromResult(Ok(StoreServices.GetOrders()));
+            return Ok(StoreServices.GetOrders());
         }
 
         [HttpGet("/orders/{id}", Name = nameof(GetOrder))]
-        public async Task <ActionResult<Order>> GetOrder([FromRoute] Guid id)
+        public ActionResult<Order> GetOrder([FromRoute] Guid id)
         {
             var order = StoreServices.GetOrder(id);
             ActionResult<Order> result = NotFound();
@@ -43,11 +43,11 @@ namespace ContosoOnlineOrders.Api.Controllers
                 result = Ok(order);
             }
 
-            return await Task.FromResult(result);
+            return result;
         }
 
         [HttpGet("/orders/{id}/checkInventory", Name = nameof(CheckInventory))]
-        public async Task<ActionResult> CheckInventory([FromRoute] Guid id)
+        public ActionResult CheckInventory([FromRoute] Guid id)
         {
             ActionResult result = NotFound();
 
@@ -64,11 +64,11 @@ namespace ContosoOnlineOrders.Api.Controllers
                 result = Conflict();
             }
 
-            return await Task.FromResult(result);
+            return result;
         }
 
         [HttpGet("/orders/{id}/ship", Name = nameof(ShipOrder))]
-        public async Task<ActionResult> ShipOrder([FromRoute] Guid id)
+        public ActionResult ShipOrder([FromRoute] Guid id)
         {
             var shipResult = StoreServices.ShipOrder(id);
             ActionResult result = NotFound();
@@ -78,11 +78,11 @@ namespace ContosoOnlineOrders.Api.Controllers
                 result = Ok();
             }
 
-            return await Task.FromResult(result);
+            return result;
         }
 
         [HttpPut("/products/{id}/checkInventory", Name = nameof(UpdateProductInventory))]
-        public async Task<ActionResult> UpdateProductInventory([FromRoute] int id, 
+        public ActionResult UpdateProductInventory([FromRoute] int id, 
             [FromBody] InventoryUpdateRequest request)
         {
             ActionResult result = NotFound();
@@ -97,11 +97,11 @@ namespace ContosoOnlineOrders.Api.Controllers
                 result = NotFound();
             }
 
-            return await Task.FromResult(result);
+            return result;
         }
 
-[HttpPost("/products", Name = nameof(CreateProduct))]
-        public async Task<ActionResult<Product>> CreateProduct(
+        [HttpPost("/products", Name = nameof(CreateProduct))]
+        public ActionResult<Product> CreateProduct(
             [FromBody] CreateProductRequest request)
         {
             ActionResult<Product> result = NotFound();
@@ -117,15 +117,15 @@ namespace ContosoOnlineOrders.Api.Controllers
                 result = Conflict();
             }
 
-            return await Task.FromResult(result);
+            return result;
         }
 
         [HttpGet("/low-inventory", Name = nameof(GetLowInventoryProducts))]
         [MapToApiVersion("1.2")]
-        public async Task<ActionResult<Product>> GetLowInventoryProducts()
+        public ActionResult<Product> GetLowInventoryProducts()
         {
             var products = StoreServices.GetProducts().Where(_ => _.InventoryCount <= 5);
-            return await Task.FromResult(Ok(products));
+            return Ok(products);
         }
     }
 }

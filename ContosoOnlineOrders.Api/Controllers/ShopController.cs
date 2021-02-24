@@ -26,7 +26,7 @@ namespace ContosoOnlineOrders.Api.Controllers
         }
 
         [HttpPost("/orders", Name = nameof(CreateOrder))]
-        public async Task<ActionResult<Order>> CreateOrder(Order order)
+        public ActionResult<Order> CreateOrder(Order order)
         {
             ActionResult<Order> result = Conflict();
 
@@ -40,27 +40,27 @@ namespace ContosoOnlineOrders.Api.Controllers
                 result = Conflict();
             }
 
-            return await Task.FromResult(result);
+            return result;
         }
 
         [HttpGet("/products", Name = nameof(GetProducts))]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public ActionResult<IEnumerable<Product>> GetProducts()
         {
-            return await Task.FromResult(Ok(StoreServices.GetProducts()));
+            return Ok(StoreServices.GetProducts());
         }
 
         [HttpGet("/products/page/{page}", Name = nameof(GetProductsPage))]
         [MapToApiVersion("1.1")]
         [MapToApiVersion("1.2")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsPage([FromRoute] int page = 0)
+        public ActionResult<IEnumerable<Product>> GetProductsPage([FromRoute] int page = 0)
         {
             var pageSize = 5;
             var productsPage = StoreServices.GetProducts().Skip(page * pageSize).Take(pageSize);
-            return await Task.FromResult(Ok(productsPage));
+            return Ok(productsPage);
         }
 
         [HttpGet("/products/{id}", Name = nameof(GetProduct))]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public ActionResult<Product> GetProduct(int id)
         {
             var product = StoreServices.GetProduct(id);
             ActionResult<Product> result = NotFound();
@@ -70,7 +70,7 @@ namespace ContosoOnlineOrders.Api.Controllers
                 result = Ok(product);
             }
 
-            return await Task.FromResult(result);
+            return result;
         }
     }
 }

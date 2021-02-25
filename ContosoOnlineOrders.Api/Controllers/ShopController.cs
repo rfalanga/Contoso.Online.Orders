@@ -1,11 +1,10 @@
+using ContosoOnlineOrders.Abstractions;
+using ContosoOnlineOrders.Abstractions.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using ContosoOnlineOrders.Abstractions;
-using ContosoOnlineOrders.Abstractions.Models;
-using ContosoOnlineOrders.Api.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoOnlineOrders.Api.Controllers
 {
@@ -18,21 +17,18 @@ namespace ContosoOnlineOrders.Api.Controllers
     [Consumes(MediaTypeNames.Application.Json)]
     public class ShopController : ControllerBase
     {
-        public IStoreDataService StoreServices { get; }
+        private readonly IStoreDataService _storeServices;
 
-        public ShopController(IStoreDataService storeServices)
-        {
-            StoreServices = storeServices;
-        }
+        public ShopController(IStoreDataService storeServices) => _storeServices = storeServices;
 
         [HttpPost("/orders", Name = nameof(CreateOrder))]
-        public ActionResult<Order> CreateOrder(Order order)
+        public async Task<ActionResult<Order>> CreateOrder(Order order)
         {
-            ActionResult<Order> result = Conflict();
+            ActionResult<Order> result;
 
             try
             {
-                StoreServices.CreateOrder(order);
+                _ = await _storeServices.CreateOrderAsync(order);
                 result = Created($"/orders/{order.Id}", order);
             }
             catch
@@ -44,28 +40,26 @@ namespace ContosoOnlineOrders.Api.Controllers
         }
 
         [HttpGet("/products", Name = nameof(GetProducts))]
-        public ActionResult<IEnumerable<Product>> GetProducts()
-        {
-            return Ok(StoreServices.GetProducts());
-        }
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts() =>
+            Ok(await _storeServices.GetProductsAsync());
 
         [HttpGet("/products/page/{page}", Name = nameof(GetProductsPage))]
         [MapToApiVersion("1.1")]
         [MapToApiVersion("1.2")]
-        public ActionResult<IEnumerable<Product>> GetProductsPage([FromRoute] int page = 0)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsPage([FromRoute] int page = 0)
         {
             var pageSize = 5;
-            var productsPage = StoreServices.GetProducts().Skip(page * pageSize).Take(pageSize);
-            return Ok(productsPage);
+            var products = await _storeServices.GetProductsAsync();
+            return Ok(products.Skip(page * pageSize).Take(pageSize));
         }
 
         [HttpGet("/products/{id}", Name = nameof(GetProduct))]
-        public ActionResult<Product> GetProduct(int id)
+        public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = StoreServices.GetProduct(id);
             ActionResult<Product> result = NotFound();
 
-            if(product != null)
+            var product = await _storeServices.GetProductAsync(id);
+            if (product != null)
             {
                 result = Ok(product);
             }

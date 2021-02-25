@@ -2,7 +2,6 @@
 using Microsoft.Azure.CosmosRepository;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ContosoOnlineOrders.DataProviders.Cosmos
 {
@@ -10,6 +9,18 @@ namespace ContosoOnlineOrders.DataProviders.Cosmos
     {
         public bool IsShipped { get; set; }
         public DateTime OrderDate { get; set; }
-        public List<CartItem> Items { get; set; } = new List<CartItem>();
+        public List<CartItem> Items { get; set; } = new();
+
+        public static implicit operator Order(OrderItem orderItem) =>
+            new(Guid.Parse(orderItem.Id), orderItem.Items);
+
+        public static implicit operator OrderItem(Order order) =>
+            new()
+            {
+                Id = order.Id.ToString(),
+                IsShipped = order.IsShipped,
+                Items = order.Items,
+                OrderDate = DateTime.Now
+            };
     }
 }

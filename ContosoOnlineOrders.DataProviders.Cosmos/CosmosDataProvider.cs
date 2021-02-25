@@ -4,28 +4,28 @@ using Microsoft.Azure.CosmosRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ContosoOnlineOrders.DataProviders.Cosmos
 {
     public class CosmosDataProvider : IStoreDataService
     {
-        public CosmosDataProvider(IRepository<ProductItem> productRepository,
-            IRepository<OrderItem> orderRepository)
+        private readonly IRepository<ProductItem> _productRepository;
+        private readonly IRepository<OrderItem> _orderRepository;
+
+        public CosmosDataProvider(IRepositoryFactory factory)
         {
-            ProductRepository = productRepository;
-            OrderRepository = orderRepository;
+            _productRepository = factory.RepositoryOf<ProductItem>();
+            _orderRepository = factory.RepositoryOf<OrderItem>();
         }
 
-        public IRepository<ProductItem> ProductRepository { get; }
-        public IRepository<OrderItem> OrderRepository { get; }
-
-        public bool CheckOrderInventory(Guid id)
+        public async Task<bool> CheckOrderInventoryAsync(Guid id)
         {
-            var order = GetOrder(id);
+            var order = await _orderRepository.GetAsync(id.ToString());
 
             foreach (var item in order.Items)
             {
-                if(!CheckProductInventory(item.ProductId, item.Quantity))
+                if(!await CheckProductInventoryAsync(item.ProductId, item.Quantity))
                 {
                     return false;
                 }
@@ -34,75 +34,69 @@ namespace ContosoOnlineOrders.DataProviders.Cosmos
             return true;
         }
 
-        public bool CheckProductInventory(int id, int forAmount)
+        public async Task<bool> CheckProductInventoryAsync(int id, int forAmount)
         {
-            var product = GetProduct(id);
+            var product = await GetProductAsync(id);
             return product.InventoryCount >= forAmount;
         }
 
-        public void CreateOrder(Order order)
+        public async Task<Order> CreateOrderAsync(Order order) =>
+            await _orderRepository.CreateAsync(order);
+
+        public async Task<Product> CreateProductAsync(Product product) =>
+            await _productRepository.CreateAsync(product);
+
+        public async Task<Order> GetOrderAsync(Guid id) =>
+            await _orderRepository.GetAsync(id.ToString());
+
+        public async Task<IEnumerable<Order>> GetOrdersAsync()
         {
-            OrderRepository.CreateAsync(new OrderItem
-            {
-                OrderDate = DateTime.Now,
-                Id = order.Id.ToString(),
-                IsShipped = false,
-                Items = order.Items
-            });
+            var orders = await _orderRepository.GetAsync(_ => true);
+            return orders.Select(orderItem => (Order)orderItem);
         }
 
-        public void CreateProduct(Product product)
+        public async Task<Product> GetProductAsync(int id) =>
+            await _productRepository.GetAsync(id.ToString());
+
+        public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            ProductRepository.CreateAsync(new ProductItem
-            {
-                Id = product.Id.ToString(),
-                Name = product.Name,
-                InventoryCount = product.InventoryCount
-            });
+            var products = await _productRepository.GetAsync(_ => true);
+            return products.Select(productItem => (Product)productItem);
         }
 
-        public Order GetOrder(Guid id)
+        public async Task<bool> ShipOrderAsync(Guid id)
         {
-            return GetOrders().First(_ => _.Id == id);
-        }
-
-        public IEnumerable<Order> GetOrders()
-        {
-            return OrderRepository.GetAsync(_ => true).Result
-                .Select(_ => new Order(Guid.Parse(_.Id), _.Items));
-        }
-
-        public Product GetProduct(int id)
-        {
-            return GetProducts().First(_ => _.Id == id);
-        }
-
-        public IEnumerable<Product> GetProducts()
-        {
-            return ProductRepository.GetAsync(_ => true).Result
-                .Select(_ => new Product(int.Parse(_.Id), _.Name, _.InventoryCount));
-        }
-
-        public bool ShipOrder(Guid id)
-        {
-            var orderItem = OrderRepository.GetAsync(_ => _.Id == id.ToString()).Result.First();
-            var products = GetProducts();
+            var orderItem = await _orderRepository.GetAsync(id.ToString());
+            var products = await GetProductsAsync();
 
             // update all the inventories
-            foreach (var item in orderItem.Items)
-            {
-                UpdateProductInventory(item.ProductId, products.First(_ => _.Id == item.ProductId).InventoryCount - item.Quantity);
-            }
+            var updateTasks =
+                orderItem.Items.Select(
+                    item =>
+                    {
+                        var product = products.First(_ => _.Id == item.ProductId);
+                        var productItem = product with
+                        {
+                            InventoryCount = product.InventoryCount - item.Quantity
+                        };
+
+                        return _productRepository.UpdateAsync(productItem).AsTask();
+                    });
+
+            await Task.WhenAll(updateTasks);
+
             orderItem.IsShipped = true;
-            OrderRepository.UpdateAsync(orderItem);
+
+            _ = await _orderRepository.UpdateAsync(orderItem);
+
             return true;
         }
 
-        public void UpdateProductInventory(int id, int inventory)
+        public async Task UpdateProductInventoryAsync(int id, int inventory)
         {
-            var productItem = ProductRepository.GetAsync(_ => _.Id == id.ToString()).Result.First();
+            var productItem = await _productRepository.GetAsync(id.ToString());
             productItem.InventoryCount = inventory;
-            ProductRepository.UpdateAsync(productItem);
+            await _productRepository.UpdateAsync(productItem);
         }
     }
 }

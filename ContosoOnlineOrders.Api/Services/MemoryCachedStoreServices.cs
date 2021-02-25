@@ -1,9 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using ContosoOnlineOrders.Abstractions;
 using ContosoOnlineOrders.Abstractions.Models;
 using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ContosoOnlineOrders.Api.Services
 {
@@ -12,108 +13,91 @@ namespace ContosoOnlineOrders.Api.Services
         const string MEMCACHE_KEY_ORDERS = "orders";
         const string MEMCACHE_KEY_PRODUCTS = "products";
 
-        public MemoryCachedStoreServices(IMemoryCache memoryCache)
+        private readonly IMemoryCache _memoryCache;
+
+        public MemoryCachedStoreServices(IMemoryCache memoryCache) => _memoryCache = memoryCache;
+
+        public async Task<bool> CheckOrderInventoryAsync(Guid id)
         {
-            MemoryCache = memoryCache;
-        }
+            var order = (await GetOrderAsync(id)) ?? throw new ArgumentException($"No order found for Order ID {id}.");
 
-        public IMemoryCache MemoryCache { get; }
-
-        public bool CheckOrderInventory(Guid id)
-        {
-            var order = GetOrder(id);
-
-            if(order == null)
+            foreach (var cartItem in order.Items)
             {
-                throw new ArgumentException($"No order found for Order ID {id}.");
-            }
-            else
-            {
-                foreach (var cartItem in order.Items)
+                var result = await CheckProductInventoryAsync(cartItem.ProductId, cartItem.Quantity);
+                if (!result)
                 {
-                    var result = CheckProductInventory(cartItem.ProductId, cartItem.Quantity);
-                    if(!result)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
             return true;
         }
 
-        public bool CheckProductInventory(int id, int forAmount)
-        {
-            return GetProduct(id).InventoryCount >= forAmount;
-        }
+        public async Task<bool> CheckProductInventoryAsync(int id, int forAmount) =>
+            (await GetProductAsync(id)).InventoryCount >= forAmount;
 
-        public void CreateOrder(Order order)
+        public async Task<Order> CreateOrderAsync(Order order)
         {
-            var orders = GetOrders().ToList();
-
-            if(orders.Any(x => x.Id == order.Id))
+            var orders = await GetOrdersAsync();
+            if (orders.Any(x => x.Id == order.Id))
             {
                 throw new ArgumentException($"An order already exists with the Order ID {order.Id}.");
             }
             else
             {
-                orders.Add(order);
-                MemoryCache.Set<IEnumerable<Order>>(MEMCACHE_KEY_ORDERS, orders);
+                _memoryCache.Set(MEMCACHE_KEY_ORDERS, orders.Concat(new[] { order }).ToList());
             }
+
+            return order;
         }
 
-        public void CreateProduct(Product product)
+        public async Task<Product> CreateProductAsync(Product product)
         {
-            var products = GetProducts().ToList();
-            
-            if(products.Any(x => x.Id == product.Id))
+            var products = await GetProductsAsync();
+            if (products.Any(x => x.Id == product.Id))
             {
                 throw new ArgumentException($"Product with matching product ID {product.Id} already exists.");
             }
             else
             {
-                products.Add(product);
-                MemoryCache.Set<IEnumerable<Product>>(MEMCACHE_KEY_PRODUCTS, products);
-            }
-        }
-
-        public Order GetOrder(Guid id)
-        {
-            return GetOrders().FirstOrDefault(_ => _.Id == id);
-        }
-
-        public IEnumerable<Order> GetOrders()
-        {
-            if(MemoryCache.Get(MEMCACHE_KEY_ORDERS) == null)
-            {
-                MemoryCache.Set<IEnumerable<Order>>(MEMCACHE_KEY_ORDERS, new List<Order>());
+                _memoryCache.Set(MEMCACHE_KEY_PRODUCTS, products.Concat(new[] { product }).ToList());
             }
 
-            return MemoryCache.Get<IEnumerable<Order>>(MEMCACHE_KEY_ORDERS);
+            return product;
         }
 
-        public Product GetProduct(int id)
+        public async Task<Order> GetOrderAsync(Guid id)
         {
-            return GetProducts().FirstOrDefault(x => x.Id == id);
+            var orders = await GetOrdersAsync();
+            return orders.FirstOrDefault(order => order.Id == id);
         }
 
-        public IEnumerable<Product> GetProducts()
+        public async Task<IEnumerable<Order>> GetOrdersAsync() =>
+            await _memoryCache.GetOrCreateAsync(
+                MEMCACHE_KEY_ORDERS, _ => Task.FromResult(new List<Order>()));
+
+        public async Task<Product> GetProductAsync(int id)
         {
-            if(MemoryCache.Get(MEMCACHE_KEY_PRODUCTS) == null)
-            {
-                MemoryCache.Set<IEnumerable<Product>>(MEMCACHE_KEY_PRODUCTS, new List<Product>());
-            }
-
-            return MemoryCache.Get<IEnumerable<Product>>(MEMCACHE_KEY_PRODUCTS);
+            var products = await GetProductsAsync();
+            return products.FirstOrDefault(product => product.Id == id);
         }
 
-        public bool ShipOrder(Guid id)
+        public async Task<IEnumerable<Product>> GetProductsAsync() =>
+            await _memoryCache.GetOrCreateAsync(
+                MEMCACHE_KEY_PRODUCTS, _ => Task.FromResult(new List<Product>()));
+
+        public async Task<bool> ShipOrderAsync(Guid id)
         {
             try
             {
-                var orders = GetOrders();
-                GetOrders().FirstOrDefault(_ => _.Id == id).IsShipped = true;
-                MemoryCache.Set<IEnumerable<Order>>(MEMCACHE_KEY_ORDERS, orders);
+                var orders = await GetOrdersAsync();
+                var order = orders.FirstOrDefault(_ => _.Id == id);
+                if (order is not null)
+                {
+                    order.IsShipped = true;
+                    _memoryCache.Set(MEMCACHE_KEY_ORDERS, orders.ToList());
+                }
+
                 return true;
             }
             catch
@@ -122,15 +106,15 @@ namespace ContosoOnlineOrders.Api.Services
             }
         }
 
-        public void UpdateProductInventory(int id, int inventory)
+        public async Task UpdateProductInventoryAsync(int id, int inventory)
         {
-            var products = GetProducts();
+            var products = await GetProductsAsync();
             var existingProduct = products.FirstOrDefault(x => x.Id == id);
-            if(existingProduct != null)
+            if (existingProduct != null)
             {
                 var otherProducts = products.Where(_ => _.Id != id).ToList();
                 otherProducts.Add(new Product(id, existingProduct.Name, inventory));
-                MemoryCache.Set<IEnumerable<Product>>(MEMCACHE_KEY_PRODUCTS, otherProducts.ToArray());
+                _memoryCache.Set(MEMCACHE_KEY_PRODUCTS, otherProducts.ToList());
             }
         }
     }

@@ -14,8 +14,10 @@ namespace ContosoOnlineOrders.Api.Controllers
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
     [ApiVersion("1.2")]
+#if ProducesConsumes
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
+#endif 
     public class AdminController : ControllerBase
     {
         private readonly IStoreDataService _storeServices;
